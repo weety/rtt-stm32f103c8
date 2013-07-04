@@ -31,7 +31,7 @@ Export('rtconfig')
 objs = PrepareBuilding(env, RTT_ROOT)
 
 # STM32 firemare library building script
-objs = objs + SConscript( GetCurrentDir() + '/Libraries/SConscript', variant_dir='build/bsp/Libraries', duplicate=0)
+#objs = objs + SConscript( GetCurrentDir() + '/Libraries/SConscript', variant_dir='build/bsp/Libraries', duplicate=0)
 
 # build program 
 env.Program(TARGET, objs)
