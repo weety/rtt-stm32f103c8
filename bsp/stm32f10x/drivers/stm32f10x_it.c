@@ -259,6 +259,8 @@ void EXTI4_IRQHandler(void)
 *******************************************************************************/
 #if defined(RT_USING_STD_USB)
 
+extern void USB_Istr(void);
+
 #if defined(STM32L1XX_MD) || defined(STM32L1XX_HD)|| defined(STM32L1XX_MD_PLUS)|| defined (STM32F37X)
 void USB_LP_IRQHandler(void)
 #else

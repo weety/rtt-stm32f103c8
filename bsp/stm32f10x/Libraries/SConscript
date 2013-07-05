@@ -81,7 +81,7 @@ elif rtconfig.CROSS_TOOL == 'iar':
 path = [cwd + '/STM32F10x_StdPeriph_Driver/inc', 
     cwd + '/CMSIS/CM3/DeviceSupport/ST/STM32F10x']
 
-usb_path = [cwd + 'STM32_USB-FS-Device_Driver/inc']
+usb_path = [cwd + '/STM32_USB-FS-Device_Driver/inc']
 
 if GetDepend('RT_USING_STD_USB'):
     src += usb_src

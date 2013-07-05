@@ -8,10 +8,10 @@ src_drv = ['rtc.c', 'usart.c', 'led.c']
 usb_drv = Split("""
 usb/hw_config.c
 usb/usb_desc.c
-usb/usb_endp.c
 usb/usb_istr.c
 usb/usb_prop.c
 usb/usb_pwr.c
+usb/cdc_serial.c
 """)
 
 if GetDepend('RT_USING_DFS'):
@@ -38,8 +38,8 @@ src = src_bsp + src_drv
 path = [ GetCurrentDir() ]
 
 if GetDepend('RT_USING_STD_USB'):
-    src_drv += usb_drv
-    path += ['usb/']
+    src += usb_drv
+    path += [GetCurrentDir() + '/usb']
 
 CPPDEFINES = []
 group = DefineGroup('Startup', src, depend = [''], CPPPATH = path, CPPDEFINES = CPPDEFINES)

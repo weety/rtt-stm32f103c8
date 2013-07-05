@@ -62,6 +62,7 @@
 #define RT_USING_DEVICE
 #define RT_USING_SERIAL
 #define RT_USING_UART1
+#define RT_USING_STD_USB
 
 /* SECTION: Console options */
 #define RT_USING_CONSOLE

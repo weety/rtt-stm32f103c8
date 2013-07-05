@@ -30,6 +30,8 @@
 #ifndef __PLATFORM_CONFIG_H
 #define __PLATFORM_CONFIG_H
 
+#define USE_STM3210E_EVAL
+
 /* Includes ------------------------------------------------------------------*/
 #if defined(STM32L1XX_MD) || defined(STM32L1XX_HD)|| defined(STM32L1XX_MD_PLUS)
  #include "stm32l1xx.h"
@@ -45,7 +47,7 @@
  #if defined (USE_STM3210B_EVAL)
   #include "stm3210b_eval.h"
  #elif defined (USE_STM3210E_EVAL)
-  #include "stm3210e_eval.h"
+  //#include "stm3210e_eval.h"
  #else
   #error "Missing define: USE_STM3210B_EVAL or USE_STM3210E_EVAL"
  #endif /* USE_STM3210B_EVAL */
