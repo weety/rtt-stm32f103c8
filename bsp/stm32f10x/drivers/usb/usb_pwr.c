@@ -37,7 +37,7 @@
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 __IO uint32_t bDeviceState = UNCONNECTED; /* USB device status */
-__IO bool fSuspendEnabled = FALSE;//TRUE;  /* true when suspend is possible */
+__IO bool fSuspendEnabled = TRUE;  /* true when suspend is possible */
 __IO uint32_t EP[8];
 
 struct
@@ -162,54 +162,7 @@ void Suspend(void)
 	wCNTR |= CNTR_LPMODE;
 	_SetCNTR(wCNTR);
 	
-	/*prepare entry in low power mode (STOP mode)*/
-	/* Select the regulator state in STOP mode*/
-	savePWR_CR = PWR->CR;
-	tmpreg = PWR->CR;
-	/* Clear PDDS and LPDS bits */
-	tmpreg &= ((uint32_t)0xFFFFFFFC);
-	/* Set LPDS bit according to PWR_Regulator value */
-	tmpreg |= PWR_Regulator_LowPower;
-	/* Store the new value */
-	PWR->CR = tmpreg;
-	/* Set SLEEPDEEP bit of Cortex System Control Register */
-#if defined (STM32F30X) || defined (STM32F37X)
-        SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
-#else
-        SCB->SCR |= SCB_SCR_SLEEPDEEP;       
-#endif
-	
-	/* enter system in STOP mode, only when wakeup flag in not set */
-	if((_GetISTR()&ISTR_WKUP)==0)
-	{
-		__WFI();
-		/* Reset SLEEPDEEP bit of Cortex System Control Register */
-#if defined (STM32F30X) || defined (STM32F37X)
-                SCB->SCR &= (uint32_t)~((uint32_t)SCB_SCR_SLEEPDEEP_Msk); 
-#else
-                SCB->SCR &= (uint32_t)~((uint32_t)SCB_SCR_SLEEPDEEP); 
-#endif
-	}
-	else
-	{
-		/* Clear Wakeup flag */
-		_SetISTR(CLR_WKUP);
-		/* clear FSUSP to abort entry in suspend mode  */
-        wCNTR = _GetCNTR();
-        wCNTR&=~CNTR_FSUSP;
-        _SetCNTR(wCNTR);
-		
-		/*restore sleep mode configuration */ 
-		/* restore Power regulator config in sleep mode*/
-		PWR->CR = savePWR_CR;
-		
-		/* Reset SLEEPDEEP bit of Cortex System Control Register */
-#if defined (STM32F30X) || defined (STM32F37X)		
-                SCB->SCR &= (uint32_t)~((uint32_t)SCB_SCR_SLEEPDEEP_Msk);
-#else
-                SCB->SCR &= (uint32_t)~((uint32_t)SCB_SCR_SLEEPDEEP);
-#endif
-    }
+	Enter_LowPowerMode();
 }
 
 /*******************************************************************************

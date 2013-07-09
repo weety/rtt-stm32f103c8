@@ -267,7 +267,10 @@ void USB_LP_IRQHandler(void)
 void USB_LP_CAN1_RX0_IRQHandler(void)
 #endif
 {
+  /* enter interrupt */
+  rt_interrupt_enter();
   USB_Istr();
+  rt_interrupt_leave();
 }
 #endif
 
